@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Management System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+        crossorigin="anonymous">
+  <!--    Google font-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto&display=swap" rel="stylesheet">
+  <!--    MINE-->
+
+  <link rel="stylesheet" th:href="@{style.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Admin Dashboard </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+
+          <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/show_new_employee_form}">Add New Staff</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admin_dashboard}">View Staff</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/addNewLeave}">Add Leave</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"th:href="@{/viewAllLeave}">View Leave History</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/processLogout}">Logout</a>
+        </li>
+
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-2">
+  <!--                Success message-->
+  <div th:if="${param.success}">
+    <div class="alert alert-info">
+      Successfully added
+    </div>
+  </div>
+  <!--    Error Message-->
+  <div th:if="${param.error}">
+    <div style="color: red" class="alert alert-info">
+      You cannot add leave more than one for the same email!!!
+    </div>
+  </div>
+
+<div class="container my-2">
+
+  <header class="text-center">
+    <h2>All Leave</h2>
+  </header>
+
+  <table class="table table-striped table-responsive-md" border="1">
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Description</th>
+      <th>From Date</th>
+      <th>To Date</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="leavee:${listOfLeaves}">
+      <td th:text="${leavee.email}"></td>
+      <td th:text="${leavee.description}"></td>
+      <td th:text="${leavee.fromDate}"></td>
+      <td th:text="${leavee.toDate}"></td>
+      <td th:text="${leavee.status}"></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

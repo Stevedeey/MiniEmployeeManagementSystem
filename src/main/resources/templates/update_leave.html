@@ -19,15 +19,15 @@
   <h2>Add Leave</h2>
 
 
-  <form action="" th:action="@{/addNewLeave}" th:object="${leavee}" method="post">
+  <form action="" th:action="@{/editLeave}" th:object="${leavee}" method="post">
     <input type="hidden" th:field="*{id}">
     <input type="email" th:field="*{email}" placeholder="Email"
            class="form-control mb-4 col-md-3" required>
     <input type="text" th:field="*{description}" placeholder="Description"
            class="form-control mb-4 col-md-3" required>
-    <input type="text" th:field="*{fromDate}" placeholder="From Date"
+    <input type="date" th:field="*{fromDate}" placeholder="From Date"
            class="form-control mb-4 col-md-3" required>
-    <input type="text" th:field="*{toDate}" placeholder="To Date"
+    <input type="date" th:field="*{toDate}" placeholder="To Date"
            class="form-control mb-4 col-md-3" required>
 
     <select class="form-control form-control-lg mb-3" th:field="*{status}">
@@ -36,9 +36,7 @@
       <option name="status" th:value="'Approved'"  th:text="Approved"></option>
       <option name="status" th:value="'Rejected'"   th:text="Rejected"></option>
     </select>
-    <div class="row">
-      <div class="col-md-6-offset"></div>
-      <div class="col-md-6">
+
         <button  type="submit" class="btn btn-info col-2">Submit</button>
 
 

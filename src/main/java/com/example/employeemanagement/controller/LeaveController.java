@@ -74,16 +74,24 @@ public class LeaveController {
         System.out.println("I entered addNEW "+leavee);
         if(leaveService.saveLeave(leavee)!=null){
             return "redirect:/viewAllLeave?success";
-        }
+        } else
        return "redirect:/viewAllLeave?error";
     }
 
+
+    @PostMapping("/editLeave")
+    public String editLeave(@ModelAttribute("leavee") Leavee leavee){
+        if(leaveService.editLeave(leavee)!=null) {
+            return "redirect:/viewAllLeave?success_update";
+        }
+        else
+        return "redirect:/viewAllLeave?error";
+    }
 
     @GetMapping("/showLeaveUpdateForm/{id}")
     public  String show_update_form_leave(@PathVariable(value = "id") long id, Model model){
         //getting employee by id from the service
         Leavee leavee = leaveService.getEmployeeById(id);
-        System.out.println("Entered show UPDAAAAA");
         //set employee as a model to prepopulate the form
         model.addAttribute("leavee",leavee);
         return "update_leave";
@@ -92,7 +100,7 @@ public class LeaveController {
     @GetMapping("showLeaveDeleteForm/{id}")
     public String show_delete_form_leave(@PathVariable(value = "id")long id){
         //call delete employee method
-        this.leaveService.deleteEmployeeById(id);
+        this.leaveService.deleteLeaveById(id);
         return "redirect:/viewAllLeave";
 
     }

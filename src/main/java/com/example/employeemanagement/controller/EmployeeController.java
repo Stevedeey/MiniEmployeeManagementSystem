@@ -60,7 +60,21 @@ public class EmployeeController {
         return mav;
     }
 
-
+    @GetMapping("/emp_dashboard")
+    public ModelAndView emp_dashboard(HttpServletRequest request, HttpServletResponse response){
+        HttpSession session = request.getSession();
+        Employee user  = (Employee) session.getAttribute("user");
+        if(user==null){
+            ModelAndView mav = new ModelAndView("emp_login");
+            mav.addObject("login", new Login());
+            mav.addObject("user", new Employee());
+            session.setAttribute("message","You need to login first");
+            return mav;
+        }
+        ModelAndView mav = new ModelAndView("emp_dashboard");
+        mav.addObject("user",user);
+        return mav;
+    }
 
     @GetMapping("/show_new_employee_form")
     public String show_new_employee_form(Model model){
@@ -80,6 +94,17 @@ public class EmployeeController {
        return "redirect:/admin_dashboard?error";
        }
 
+       //
+       @PostMapping("/saveEditedEmployee")
+       public String saveEditedEmployee(@ModelAttribute("employee") Employee employee){
+           // @ModelAttribute annotation is added so that we may be able to bind form data to the Model
+           //Now save employee to the database
+           System.out.println();
+           if(employeeService.editEmployee(employee)!=null) {
+               return "redirect:/admin_dashboard?success_update";
+           }
+           return "redirect:/admin_dashboard?error";
+       }
 
     @GetMapping("/show_update_form/{id}")
     public  String show_update_form(@PathVariable(value = "id") long id, Model model){
@@ -113,6 +138,8 @@ public class EmployeeController {
         return mav;
     }
 
+
+
     @RequestMapping(value = "/emploginProcess", method = RequestMethod.POST)
     public String loginProcess(HttpServletRequest request, HttpServletResponse response,
                                @ModelAttribute("emplogin") Login emplogin) {
@@ -124,7 +151,7 @@ public class EmployeeController {
 
         if (user != null) {
             httpSession.setAttribute("user", user);
-            System.out.println("im not null");
+
 
             return "/emp_dashboard";
         } else {

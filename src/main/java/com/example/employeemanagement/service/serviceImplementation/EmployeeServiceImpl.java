@@ -22,12 +22,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee saveEmployee(Employee employee) {
+
       Employee user = employeeRepository.findEmployeeByEmail(employee.getEmail()); //to check if user doesnt exist
       if(user==null) {
           return  employeeRepository.save(employee); //new user saved
       }
       else  return null;
     }
+
+  @Override
+  public Employee editEmployee(Employee employee) {
+    Employee user = employeeRepository.findEmployeeByEmail(employee.getEmail()); //to check if user doesnt exist
+//    user.setEmail(employee.getEmail());
+//    user.setAddress(employee.getAddress());
+//    user.setPassword(employee.getPassword());
+//    user.setFirstName(employee.getFirstName());
+//    user.setLastName(employee.getLastName());
+//    return employeeRepository.save(user);  one war
+    if(user!=null) {
+      return  employeeRepository.save(employee); //new user saved(another way)
+    }
+    else  return null;
+  }
 
     @Override
     public Employee  getEmployeeById(Long id) {

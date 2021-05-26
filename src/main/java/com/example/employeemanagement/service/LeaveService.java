@@ -8,5 +8,6 @@ public interface LeaveService {
     Leavee saveLeave(Leavee leavee);
     List<Leavee> getAllEmployees();
      Leavee getEmployeeById(Long id);
-     void deleteEmployeeById(Long id);
+     void deleteLeaveById(Long id);
+    Leavee editLeave(Leavee leavee);
 }

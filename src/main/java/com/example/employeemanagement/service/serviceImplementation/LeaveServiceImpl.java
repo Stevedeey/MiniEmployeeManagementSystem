@@ -24,17 +24,19 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public Leavee saveLeave(Leavee leavee) {
    var tempLeave = leaveRepository.findLeaveByEmail(leavee.getEmail());
-       // if (tempLeave == null){
-        Leavee temp = null;
-        try {
-            temp = leaveRepository.save(leavee);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        // }
-       return temp;
+            if(tempLeave ==null)
+              return leaveRepository.save(leavee);
+            else return null;
     }
 
+    @Override
+    public Leavee editLeave(Leavee leavee) {
+        var tempLeave = leaveRepository.findLeaveByEmail(leavee.getEmail());
+            if(tempLeave !=null) { //the leave obj won't be null for edit.
+                return leaveRepository.save(leavee);
+            }
+            else return null;
+    }
 
     @Override
     public Leavee getEmployeeById(Long id) {
@@ -50,7 +52,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public void deleteEmployeeById(Long id) {
+    public void deleteLeaveById(Long id) {
         leaveRepository.deleteById(id);
     }
 
